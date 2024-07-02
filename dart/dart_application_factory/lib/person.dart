@@ -14,3 +14,12 @@ class Person {
 
   Person._internal(this.name);
 }
+
+void main(List<String> args) {
+  final p1 = Person("John");
+  var p2 = Person("John");
+  var p3 = Person("Jack");
+
+  print(p1 == p2); // true
+  print(p2 == p3); // false
+}
