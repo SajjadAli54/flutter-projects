@@ -18,7 +18,11 @@ class TextFieldPage extends StatelessWidget {
             children: [
               TextField(
                 onChanged: (value) => controller.updateText(value),
-                decoration: const InputDecoration(labelText: 'Enter Text'),
+                keyboardType: TextInputType.multiline,
+                maxLines: 5,
+                decoration: const InputDecoration(
+                  labelText: 'Enter Text',
+                ),
               ),
               const SizedBox(height: 20),
               Obx(() => Text("Input Text\n\t ${controller.text}"))
