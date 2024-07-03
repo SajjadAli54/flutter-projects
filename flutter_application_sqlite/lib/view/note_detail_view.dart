@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_sqlite/model/note_databas.dart';
 import 'package:flutter_application_sqlite/model/note_model.dart';
+import 'package:flutter_application_sqlite/view/note_view.dart';
 
 class NoteDetailsView extends StatefulWidget {
   const NoteDetailsView({super.key, this.noteId});
@@ -97,7 +98,11 @@ class _NoteDetailsViewState extends State<NoteDetailsView> {
             ),
           ),
           IconButton(
-            onPressed: createNote,
+            onPressed: () async {
+              createNote();
+              await Navigator.push(context,
+                  MaterialPageRoute(builder: (cont) => const NotesView()));
+            },
             icon: const Icon(Icons.save),
           ),
         ],
