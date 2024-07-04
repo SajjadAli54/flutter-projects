@@ -7,8 +7,8 @@ class Zone {
   final String title;
   final String createdBy;
   final String updatedBy;
-  final DateTime createdUpon;
-  final DateTime updatedUpon;
+  final DateTime createdOn;
+  final DateTime updatedOn;
 
   Zone({
     required this.regionId,
@@ -19,8 +19,8 @@ class Zone {
     required this.title,
     required this.createdBy,
     required this.updatedBy,
-    required this.createdUpon,
-    required this.updatedUpon,
+    required this.createdOn,
+    required this.updatedOn,
   });
 
   factory Zone.fromJson(Map<String, dynamic> json) {
@@ -33,8 +33,8 @@ class Zone {
       title: json['title'] as String,
       createdBy: json['createdBy'] as String,
       updatedBy: json['updatedBy'] as String,
-      createdUpon: DateTime.parse(json['createdUpon'] as String),
-      updatedUpon: DateTime.parse(json['updatedUpon'] as String),
+      createdOn: DateTime.parse(json['createdOn'] as String),
+      updatedOn: DateTime.parse(json['updatedOn'] as String),
     );
   }
 
@@ -48,8 +48,8 @@ class Zone {
       'title': title,
       'createdBy': createdBy,
       'updatedBy': updatedBy,
-      'createdUpon': createdUpon.toIso8601String(),
-      'updatedUpon': updatedUpon.toIso8601String(),
+      'createdOn': createdOn.toIso8601String(),
+      'updatedUpon': updatedOn.toIso8601String(),
     };
   }
 }

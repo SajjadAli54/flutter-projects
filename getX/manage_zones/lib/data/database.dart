@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:manage_zones/models/region.dart';
+import 'package:manage_zones/models/zone.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -24,12 +26,36 @@ class LocalDatabase {
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
-    CREATE TABLE items (
+    CREATE TABLE regions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      description TEXT NOT NULL
-    )
+      type TEXT NOT NULL,
+      zoneDtos TEXT,
+      status BOOLEAN NOT NULL,
+      title TEXT NOT NULL,
+      createdBy TEXT NOT NULL,
+      updatedBy TEXT NOT NULL,
+      createdOn TEXT NOT NULL,
+      updatedOn TEXT NOT NULL
+    );
     ''');
+
+    await db.execute('''
+
+    CREATE TABLE zones (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      regionId INTEGER NOT NULL,
+      areasDto TEXT,
+      type TEXT NOT NULL,
+      status BOOLEAN NOT NULL,
+      title TEXT NOT NULL,
+      createdBy TEXT NOT NULL,
+      updatedBy TEXT NOT NULL,
+      createdUpon TEXT NOT NULL,
+      updatedUpon TEXT NOT NULL,
+      FOREIGN KEY (regionId) REFERENCES regions(id) ON DELETE CASCADE ON UPDATE NO ACTION
+    );
+    ''');
+
     await db.execute('''
     CREATE TABLE changes (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,25 +82,39 @@ class LocalDatabase {
 
   Future<int> insert(String tableName, Map<String, dynamic> data) async {
     final db = await instance.database;
-    final id = await db.insert(tableName, data);
+    final id = await db.insert(
+        tableName, {...data, "createdOn": DateTime.now().toIso8601String()});
     await logChange(tableName, 'insert', id, data);
     return id;
   }
 
-  Future<int> update(
-      String tableName, Map<String, dynamic> data, int id) async {
+  Future<void> insertBatch(
+      String tableName, List<Map<String, dynamic>> data) async {
     final db = await instance.database;
-    await db.update(tableName, data, where: 'id = ?', whereArgs: [id]);
-    await logChange(tableName, 'update', id, data);
-    return id;
+    Batch batch = db.batch();
+
+    for (var datum in data) {
+      batch.insert(tableName, datum);
+    }
+
+    await batch.commit(noResult: true);
   }
 
-  Future<int> delete(String tableName, int id) async {
+  Future<List<Region>> getAllRegions() async {
     final db = await instance.database;
-    final row = await db.query(tableName, where: 'id = ?', whereArgs: [id]);
-    if (row.isNotEmpty) {
-      await logChange(tableName, 'delete', id, row.first);
-    }
-    return await db.delete(tableName, where: 'id = ?', whereArgs: [id]);
+    final List<Map<String, dynamic>> maps = await db.query('regions');
+
+    return List<Region>.from(maps.map((map) => Region.fromJson(map)));
+  }
+
+  Future<List<Zone>> getAllZones(int regionId) async {
+    final db = await instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'zones',
+      where: 'regionId = ?',
+      whereArgs: [regionId],
+    );
+
+    return List<Zone>.from(maps.map((map) => Zone.fromJson(map)));
   }
 }
