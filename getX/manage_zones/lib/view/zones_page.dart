@@ -16,9 +16,10 @@ class Zones extends StatelessWidget {
         actions: const [LogOut()],
       ),
       body: Obx(() => Center(
-            child: Column(
+            child: ListView(
               children: [
                 DropdownButton<Region>(
+                  menuMaxHeight: 12,
                   items: controller.regions
                       .map<DropdownMenuItem<Region>>((Region value) {
                     return DropdownMenuItem<Region>(
@@ -31,13 +32,15 @@ class Zones extends StatelessWidget {
                 const SizedBox(height: 20),
                 TextField(
                   onChanged: (value) => controller.setTitle(value),
+                  decoration: const InputDecoration(
+                      labelText: "Enter the Zone title to add in region"),
                 ),
                 const SizedBox(height: 20),
-                ListView(
-                  children: controller.zones
-                      .map((element) => Text(element.title))
-                      .toList(),
-                )
+                // ListView(
+                //   children: controller.zones
+                //       .map((element) => Text(element.title))
+                //       .toList(),
+                // )
               ],
             ),
           )),

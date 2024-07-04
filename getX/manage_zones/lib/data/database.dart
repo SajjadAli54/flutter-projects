@@ -117,4 +117,9 @@ class LocalDatabase {
 
     return List<Zone>.from(maps.map((map) => Zone.fromJson(map)));
   }
+
+  Future close() async {
+    final db = await instance.database;
+    db.close();
+  }
 }

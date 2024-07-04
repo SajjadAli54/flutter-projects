@@ -29,14 +29,14 @@ class LoginPage extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
               onPressed: () async => {
-                    controller.login().then((value) => {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage())),
-                        }),
+                    controller.login(),
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage())),
                   },
-              child: const Text("Login"))
+              child: const Text("Login")),
+          Obx(() => Text("${controller.body}"))
         ],
       ),
     );

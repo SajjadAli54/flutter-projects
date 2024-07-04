@@ -9,37 +9,41 @@ import 'package:manage_zones/data/database.dart';
 import 'package:manage_zones/services/api_service.dart';
 
 class LoginController extends GetxController {
-  RxString _username = "".obs;
-  RxString _password = "".obs;
+  RxString username = "".obs;
+  RxString password = "".obs;
+  var body = "".obs;
 
   String _token = "";
 
   final storage = const FlutterSecureStorage();
 
-  void setUsername(value) => _username = value;
-  void setPassword(value) => _password = value;
+  void setUsername(value) => username.value = value;
+  void setPassword(value) => password.value = value;
 
   Future<void> login() async {
+    if (username.isEmpty || password.isEmpty) return;
+
     var url = Api.loginUrl;
 
-    final response = await http.post(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'username': _username.value,
-        'password': _password.value,
-      }),
-    );
+    final headers = {'accept': "*/*", 'Content-Type': 'application/json'};
 
-    if (response.statusCode == 200) {
-      _token = jsonDecode(response.body)['jwtToken'];
-      await _saveJwtToken();
-      await populate();
-    } else {
-      throw Exception('Failed to login');
-    }
+    final data = jsonEncode({
+      'username': username.value,
+      'password': password.value,
+    });
+
+    final response = await http.post(
+        Uri.parse("https://pspapi.eraconnect.net/api/account/login"),
+        headers: headers,
+        body: data);
+
+    Map<String, dynamic> map =
+        jsonDecode(response.body) as Map<String, dynamic>;
+
+    _token = map["data"]["jwtToken"].toString();
+    body.value = map.toString();
+    await _saveJwtToken();
+    await populate();
   }
 
   _saveJwtToken() async {

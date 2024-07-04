@@ -41,6 +41,7 @@ dependencies:
   sqflite: ^2.2.8+4
   http: ^0.13.5
   flutter_secure_storage: ^8.1.0
+  sqflite_common_ffi: ^2.2.5
 
 dev_dependencies:
   flutter_test:

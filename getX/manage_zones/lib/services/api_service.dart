@@ -5,13 +5,13 @@ import 'package:manage_zones/data/constants.dart';
 class ApiService {
   // Fetch regions
   static Future<List<Map<String, dynamic>>> getRegions(String token) async {
-    final url = Uri.parse(Api.getRegionsUrl);
+    final url = Uri.parse("https://pspapi.eraconnect.net/api/region");
     final headers = {"Authorization": token, 'accept': "*/*"};
 
     final response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      return jsonDecode(response.body) as List<Map<String, dynamic>>;
     } else {
       throw Exception('Failed to load regions');
     }
@@ -26,7 +26,7 @@ class ApiService {
     final response = await http.get(url, headers: headers);
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      return jsonDecode(response.body) as List<Map<String, dynamic>>;
     } else {
       throw Exception('Failed to load zones');
     }
@@ -35,7 +35,8 @@ class ApiService {
   // Post zones
   static Future<dynamic> postZone(
       String token, Map<String, dynamic> zoneData) async {
-    final url = Uri.parse("${Api.postZonesUrl}/${zoneData["regionId"]}");
+    final url = Uri.parse(
+        "https://pspapi.eraconnect.net/api/Zone/zones/${zoneData["regionId"]}");
     final headers = {
       "Authorization": token,
       'Content-Type': 'application/json',
