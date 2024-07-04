@@ -24,7 +24,7 @@ class LocalDatabase {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  Future _createDB(Database db, int version) async {
+  Future _createDB(Database db, _) async {
     await db.execute('''
     CREATE TABLE regions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,7 +40,6 @@ class LocalDatabase {
     ''');
 
     await db.execute('''
-
     CREATE TABLE zones (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       regionId INTEGER NOT NULL,

@@ -40,7 +40,7 @@ class LoginController extends GetxController {
     Map<String, dynamic> map =
         jsonDecode(response.body) as Map<String, dynamic>;
 
-    _token = map["data"]["jwtToken"].toString();
+    _token = map["data"]["jwtToken"];
     body.value = map.toString();
     await _saveJwtToken();
     await populate();
