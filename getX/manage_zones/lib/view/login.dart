@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manage_zones/controllers/LoginController.dart';
+import 'package:manage_zones/view/home.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -9,9 +10,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final LoginController controller = Get.put(LoginController());
 
-    onLoginClick(BuildContext context) async {
-      await controller.login();
-    }
+    onLoginClick(BuildContext context) async {}
 
     return Scaffold(
       appBar: AppBar(title: const Text("Login Page")),
@@ -31,7 +30,14 @@ class LoginPage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-              onPressed: () => onLoginClick(context),
+              onPressed: () async => {
+                    controller.login().then((value) => {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const HomePage())),
+                        }),
+                  },
               child: const Text("Login"))
         ],
       ),
