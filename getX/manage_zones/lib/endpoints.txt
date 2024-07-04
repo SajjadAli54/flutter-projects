@@ -1,0 +1,4 @@
+Login: https://pspapi.eraconnect.net/api/account/login
+Regions-Get: https://pspapi.eraconnect.net/api/api/region
+Zones-Get: https://pspapi.eraconnect.net/api/api/zone/zones/{regionId}
+Zones-Post: https://pspapi.eraconnect.net/api/Zone/{regionId}
