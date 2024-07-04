@@ -7,7 +7,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final LoginCOntroller controller = Get.put(LoginCOntroller());
+    final LoginController controller = Get.put(LoginController());
     return Scaffold(
       appBar: AppBar(title: const Text("Login Page")),
       body: Column(
