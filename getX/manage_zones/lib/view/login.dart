@@ -8,6 +8,11 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LoginController controller = Get.put(LoginController());
+
+    onLoginClick(BuildContext context) async {
+      await controller.login();
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text("Login Page")),
       body: Column(
@@ -26,7 +31,8 @@ class LoginPage extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-              onPressed: controller.login, child: const Text("Login"))
+              onPressed: () => onLoginClick(context),
+              child: const Text("Login"))
         ],
       ),
     );
