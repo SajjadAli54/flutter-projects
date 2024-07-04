@@ -10,8 +10,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final LoginController controller = Get.put(LoginController());
 
-    onLoginClick(BuildContext context) async {}
-
     return Scaffold(
       appBar: AppBar(title: const Text("Login Page")),
       body: Column(
