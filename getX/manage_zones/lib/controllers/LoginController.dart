@@ -30,7 +30,7 @@ class LoginController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      String token = jsonDecode(response.body)['token'];
+      String token = jsonDecode(response.body)['jwtTtoken'];
       _saveJwtToken(token);
     } else {
       throw Exception('Failed to login');
