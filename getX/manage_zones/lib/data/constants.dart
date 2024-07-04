@@ -3,7 +3,9 @@ class MyJwtToken {
 }
 
 class Api {
-  static const String _url = "https://pspapi.eraconnect.net/api/";
-
-  static const String loginUrl = "$_url/login/";
+  static const String _url = "https://pspapi.eraconnect.net/api/",
+      loginUrl = "$_url/login/",
+      getRegionsUrl = "$_url/region",
+      getZonesUrl = '$_url/Zone/zones/', // Need Id
+      postZonesUrl = "$_url/Zone/"; // Need Id
 }
