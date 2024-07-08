@@ -27,7 +27,7 @@ class LocalDatabase {
   Future _createDB(Database db, _) async {
     await db.execute('''
     CREATE TABLE regions (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,toString();
       type TEXT NOT NULL,
       zoneDtos TEXT,
       status BOOLEAN NOT NULL,
