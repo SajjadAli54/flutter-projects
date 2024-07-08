@@ -31,7 +31,7 @@ class DatabaseHelper {
   Future<void> _onCreate(db, version) async {
     await db.execute('''  
     CREATE TABLE $_tableName (
-      id INTEGER PRIMARY KEY,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL UNIQUE,
       isFavorite BOOLEAN NOT NULL
      )''');

@@ -13,14 +13,13 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-    // TODO: implement onInit
     super.onInit();
     tasks.value = await _database.readAll();
   }
 
   void setTitle(title) => this.title.value = title;
 
-  void addTask() async {
+  Future<void> addTask() async {
     if (title.isEmpty) return;
 
     var task = await _database
@@ -31,28 +30,24 @@ class HomeController extends GetxController {
     textController.clear();
   }
 
-  void updateTask(id) {
+  Future<void> updateTask(id) async {
     if (title.isEmpty) return;
 
     var task = tasks.firstWhere((element) => element.id == id);
     task.title = title.value;
-    // tasks.value = tasks
-    //     .map((task) => task.id == id
-    //         ? Task(id: id, title: title.value, isFavorite: task.isFavorite)
-    //         : task)
-    //     .toList();
-
-    setTitle("");
-    textController.clear();
+    _update(task);
   }
 
   void setFavoriteTask(id) {
-    tasks.value = tasks
-        .map((task) => task.id == id
-            ? Task(id: id, title: task.title, isFavorite: !task.isFavorite)
-            : task)
-        .toList();
+    var task = tasks.firstWhere((task) => task.id == id);
+    task.isFavorite = !task.isFavorite;
+    _update(task);
+  }
 
+  void _update(Task task) async {
+    tasks.value = tasks.map((ele) => ele.id == task.id ? task : ele).toList();
+
+    await _database.upsert(task);
     setTitle("");
     textController.clear();
   }

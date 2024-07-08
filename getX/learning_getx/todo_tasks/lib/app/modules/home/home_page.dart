@@ -34,11 +34,12 @@ class HomePage extends GetView<HomeController> {
                 child: const Text("Add", style: textStyle)),
           ),
           const SizedBox(height: 20),
+          const Divider(),
           Obx(() => Column(
                 children: controller.tasks
                     .map((task) => Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Row(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -47,7 +48,17 @@ class HomePage extends GetView<HomeController> {
                                 style: textStyle,
                               ),
                               Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
+                                  ElevatedButton(
+                                      onPressed: () =>
+                                          controller.updateTask(task.id),
+                                      child: const Icon(
+                                        Icons.edit,
+                                        color: Colors.green,
+                                      )),
+                                  const SizedBox(width: 10),
                                   ElevatedButton(
                                       onPressed: () =>
                                           controller.setFavoriteTask(task.id),
@@ -60,14 +71,6 @@ class HomePage extends GetView<HomeController> {
                                   const SizedBox(width: 10),
                                   ElevatedButton(
                                       onPressed: () =>
-                                          controller.updateTask(task.id),
-                                      child: const Icon(
-                                        Icons.edit,
-                                        color: Colors.green,
-                                      )),
-                                  const SizedBox(width: 10),
-                                  ElevatedButton(
-                                      onPressed: () =>
                                           controller.deleteTask(task.id),
                                       child: const Icon(
                                         Icons.delete,
@@ -75,6 +78,7 @@ class HomePage extends GetView<HomeController> {
                                       ))
                                 ],
                               ),
+                              const Divider(),
                             ],
                           ),
                         ))

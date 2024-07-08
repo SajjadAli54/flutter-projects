@@ -5,11 +5,8 @@ class Task {
 
   Task({required this.id, required this.title, required this.isFavorite});
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        "id": id,
-        "title": title,
-        "isFavorite": isFavorite ? 1 : 0
-      };
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{"title": title, "isFavorite": isFavorite ? 1 : 0};
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
