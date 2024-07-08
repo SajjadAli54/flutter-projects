@@ -8,7 +8,7 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    const textStyle = TextStyle(fontSize: 28);
+    const textStyle = TextStyle(fontSize: 20);
     return Scaffold(
       appBar: AppBar(
         title: const Text('HomePage'),
@@ -56,7 +56,6 @@ class HomePage extends GetView<HomeController> {
                                             ? Icons.favorite_sharp
                                             : Icons.favorite_outline_sharp,
                                         color: Colors.yellow,
-                                        size: 28,
                                       )),
                                   const SizedBox(width: 10),
                                   ElevatedButton(
@@ -65,7 +64,6 @@ class HomePage extends GetView<HomeController> {
                                       child: const Icon(
                                         Icons.edit,
                                         color: Colors.green,
-                                        size: 28,
                                       )),
                                   const SizedBox(width: 10),
                                   ElevatedButton(
@@ -74,7 +72,6 @@ class HomePage extends GetView<HomeController> {
                                       child: const Icon(
                                         Icons.delete,
                                         color: Colors.red,
-                                        size: 28,
                                       ))
                                 ],
                               ),

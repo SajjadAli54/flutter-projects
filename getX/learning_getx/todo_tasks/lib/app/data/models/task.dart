@@ -1,20 +1,21 @@
 class Task {
-  final int id;
-  final String title;
-  final bool isFavorite;
+  int id;
+  String title;
+  bool isFavorite;
 
-  Task({required this.isFavorite, required this.id, required this.title});
+  Task({required this.id, required this.title, required this.isFavorite});
 
-  Map<String, String> toJson() => <String, String>{
-        "id": id.toString(),
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        "id": id,
         "title": title,
-        "isFavorite": isFavorite.toString()
+        "isFavorite": isFavorite ? 1 : 0
       };
 
-  factory Task.fromJson(Map<String, String> json) {
+  factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
-        id: json["id"] as int,
-        title: json["title"].toString(),
-        isFavorite: json["isFavorite"] as bool);
+      id: json["id"] as int,
+      title: json["title"] as String,
+      isFavorite: json["isFavorite"] == 1,
+    );
   }
 }
