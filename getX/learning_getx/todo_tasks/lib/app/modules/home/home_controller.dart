@@ -10,14 +10,26 @@ class HomeController extends GetxController {
 
   setTitle(title) => this.title.value = title;
 
-  add() {
+  void addTask() {
     int id = tasks.isNotEmpty ? tasks.last.id + 1 : 0;
-    tasks.add(Task(id: id, title: title.value));
+    tasks.add(Task(id: id, title: title.value, isFavorite: false));
 
+    setTitle("");
     textController.clear();
   }
 
-  delete(int id) {
+  void updateTask(id) {
+    tasks.value = tasks
+        .map((task) => task.id == id
+            ? Task(id: id, title: title.value, isFavorite: task.isFavorite)
+            : task)
+        .toList();
+
+    setTitle("");
+    textController.clear();
+  }
+
+  void deleteTask(int id) {
     final task = tasks.firstWhere((element) => element.id == id);
     tasks.remove(task);
   }

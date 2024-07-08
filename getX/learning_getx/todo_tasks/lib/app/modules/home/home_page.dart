@@ -8,6 +8,7 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    const textStyle = TextStyle(fontSize: 28);
     return Scaffold(
       appBar: AppBar(
         title: const Text('HomePage'),
@@ -21,13 +22,16 @@ class HomePage extends GetView<HomeController> {
               controller: controller.textController,
               onChanged: controller.setTitle,
               keyboardType: TextInputType.text,
-              decoration: const InputDecoration(labelText: "Enter Title"),
+              decoration: const InputDecoration(
+                  labelText:
+                      "Enter Title and then click add or task's edit button"),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ElevatedButton(
-                onPressed: controller.add, child: const Text("Add")),
+                onPressed: controller.addTask,
+                child: const Text("Add", style: textStyle)),
           ),
           const SizedBox(height: 20),
           Obx(() => Column(
@@ -40,15 +44,40 @@ class HomePage extends GetView<HomeController> {
                             children: [
                               Text(
                                 task.title,
-                                style: const TextStyle(
-                                    fontSize: 28, fontStyle: FontStyle.italic),
+                                style: textStyle,
                               ),
-                              ElevatedButton(
-                                  onPressed: () => controller.delete(task.id),
-                                  child: const Icon(
-                                    Icons.delete,
-                                    color: Colors.red,
-                                  ))
+                              Row(
+                                children: [
+                                  ElevatedButton(
+                                      onPressed: () =>
+                                          controller.updateTask(task.id),
+                                      child: Icon(
+                                        task.isFavorite
+                                            ? Icons.favorite_sharp
+                                            : Icons.favorite_outline_sharp,
+                                        color: Colors.green,
+                                        size: 28,
+                                      )),
+                                  const SizedBox(width: 10),
+                                  ElevatedButton(
+                                      onPressed: () =>
+                                          controller.updateTask(task.id),
+                                      child: const Icon(
+                                        Icons.edit,
+                                        color: Colors.green,
+                                        size: 28,
+                                      )),
+                                  const SizedBox(width: 10),
+                                  ElevatedButton(
+                                      onPressed: () =>
+                                          controller.deleteTask(task.id),
+                                      child: const Icon(
+                                        Icons.delete,
+                                        color: Colors.red,
+                                        size: 28,
+                                      ))
+                                ],
+                              ),
                             ],
                           ),
                         ))
