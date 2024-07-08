@@ -53,4 +53,9 @@ class DatabaseHelper {
     final result = await db.query(_tableName);
     return result.map((json) => Task.fromJson(json)).toList();
   }
+
+  Future<void> delete(int id) async {
+    final db = await instance.database;
+    final res = await db.delete(_tableName, where: "id = ?", whereArgs: [id]);
+  }
 }

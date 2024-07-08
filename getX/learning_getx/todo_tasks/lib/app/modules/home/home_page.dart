@@ -11,7 +11,7 @@ class HomePage extends GetView<HomeController> {
     const textStyle = TextStyle(fontSize: 20);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomePage'),
+        title: const Text('Todo Tasks'),
         centerTitle: true,
       ),
       body: ListView(

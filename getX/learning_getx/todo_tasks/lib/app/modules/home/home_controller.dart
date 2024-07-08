@@ -55,5 +55,7 @@ class HomeController extends GetxController {
   void deleteTask(int id) {
     final task = tasks.firstWhere((element) => element.id == id);
     tasks.remove(task);
+
+    _database.delete(id);
   }
 }
