@@ -50,12 +50,12 @@ class HomePage extends GetView<HomeController> {
                                 children: [
                                   ElevatedButton(
                                       onPressed: () =>
-                                          controller.updateTask(task.id),
+                                          controller.setFavoriteTask(task.id),
                                       child: Icon(
                                         task.isFavorite
                                             ? Icons.favorite_sharp
                                             : Icons.favorite_outline_sharp,
-                                        color: Colors.green,
+                                        color: Colors.yellow,
                                         size: 28,
                                       )),
                                   const SizedBox(width: 10),

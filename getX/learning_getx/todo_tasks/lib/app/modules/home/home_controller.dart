@@ -8,9 +8,10 @@ class HomeController extends GetxController {
 
   final TextEditingController textController = TextEditingController();
 
-  setTitle(title) => this.title.value = title;
+  void setTitle(title) => this.title.value = title;
 
   void addTask() {
+    if (title.isEmpty) return;
     int id = tasks.isNotEmpty ? tasks.last.id + 1 : 0;
     tasks.add(Task(id: id, title: title.value, isFavorite: false));
 
@@ -19,9 +20,21 @@ class HomeController extends GetxController {
   }
 
   void updateTask(id) {
+    if (title.isEmpty) return;
     tasks.value = tasks
         .map((task) => task.id == id
             ? Task(id: id, title: title.value, isFavorite: task.isFavorite)
+            : task)
+        .toList();
+
+    setTitle("");
+    textController.clear();
+  }
+
+  void setFavoriteTask(id) {
+    tasks.value = tasks
+        .map((task) => task.id == id
+            ? Task(id: id, title: task.title, isFavorite: !task.isFavorite)
             : task)
         .toList();
 
