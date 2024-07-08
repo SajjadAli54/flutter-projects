@@ -18,6 +18,7 @@ class HomePage extends GetView<HomeController> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+              controller: controller.textController,
               onChanged: controller.setTitle,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(labelText: "Enter Title"),
@@ -29,7 +30,30 @@ class HomePage extends GetView<HomeController> {
                 onPressed: controller.add, child: const Text("Add")),
           ),
           const SizedBox(height: 20),
-          Obx(() => Text("${controller.title}"))
+          Obx(() => Column(
+                children: controller.tasks
+                    .map((task) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                task.title,
+                                style: const TextStyle(
+                                    fontSize: 28, fontStyle: FontStyle.italic),
+                              ),
+                              ElevatedButton(
+                                  onPressed: () => controller.delete(task.id),
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ))
+                            ],
+                          ),
+                        ))
+                    .toList(),
+              ))
         ],
       ),
     );
