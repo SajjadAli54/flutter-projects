@@ -8,7 +8,6 @@ class HomeController extends GetxController {
   RxList<Task> tasks = <Task>[].obs;
 
   final TextEditingController textController = TextEditingController();
-
   final _database = DatabaseHelper.instance;
 
   @override
@@ -21,9 +20,8 @@ class HomeController extends GetxController {
 
   Future<void> addTask() async {
     if (title.isEmpty) return;
-
-    var task = await _database
-        .upsert(Task(id: -1, title: title.value, isFavorite: false));
+    var task = Task(id: -1, title: title.value, isFavorite: false);
+    task = await _database.upsert(task);
     tasks.add(task);
 
     setTitle("");
